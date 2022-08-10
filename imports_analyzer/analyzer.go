@@ -17,7 +17,7 @@ func GetAnalyzer(requiredNamingPairs, forbidden *StringSliceFlag) (*analysis.Ana
 		Name:             "inspect_imports",
 		Doc:              "checks for violations of user defined import constraints",
 		Run:              ci.run,
-		RunDespiteErrors: false,
+		RunDespiteErrors: true,
 		Requires:         []*analysis.Analyzer{},
 	}, nil
 }
