@@ -71,6 +71,12 @@ func (ci ConfiguredInspector) run(pass *analysis.Pass) (interface{}, error) {
 			}
 			path := strings.Trim(imp.Path.Value, `""`)
 
+			// Go builds tests as separate binaries, and it looks like imports the package being tested as _test.
+			// These can be skipped.
+			if name == "_test" {
+				continue
+			}
+
 			report := func(diagnosticMessage, fixMessage, newText string) {
 				// Unclear where `fixMessage` ever appears in output
 				var fixes []analysis.SuggestedFix
