@@ -64,6 +64,13 @@ func (ci ConfiguredInspector) run(pass *analysis.Pass) (interface{}, error) {
 	forbiddenPaths := *ci.ForbiddenPathsRef
 
 	for _, f := range pass.Files {
+		fileName := pass.Fset.Position(f.Package).Filename
+
+		// TODO: Make this an argument like -skip-files and pass in CI job instead
+		if strings.HasSuffix(fileName, "internal/clients/google/google_mocks.go") {
+			continue
+		}
+
 		for _, imp := range f.Imports {
 			name := ""
 			if imp.Name != nil {
